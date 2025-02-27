@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".addMovieF">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <EditText
+            android:id="@+id/etMName"
+            android:layout_width="341dp"
+            android:layout_height="63dp"
+            android:layout_marginStart="35dp"
+            android:layout_marginTop="53dp"
+            android:layout_marginEnd="35dp"
+            android:layout_marginBottom="2dp"
+            android:ems="10"
+            android:hint="MovieName"
+            android:inputType="text"
+            app:layout_constraintBottom_toTopOf="@+id/etMReleaseDate"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <EditText
+            android:id="@+id/etMReleaseDate"
+            android:layout_width="341dp"
+            android:layout_height="63dp"
+            android:layout_marginStart="35dp"
+            android:layout_marginTop="2dp"
+            android:layout_marginEnd="35dp"
+            android:layout_marginBottom="15dp"
+            android:ems="10"
+            android:hint="MovieReleaseDate"
+            android:inputType="text"
+            app:layout_constraintBottom_toTopOf="@+id/etMLong"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/etMName" />
+
+        <EditText
+            android:id="@+id/etMLong"
+            android:layout_width="0dp"
+            android:layout_height="63dp"
+            android:layout_marginStart="35dp"
+            android:layout_marginTop="2dp"
+            android:layout_marginEnd="166dp"
+            android:layout_marginBottom="2dp"
+            android:ems="10"
+            android:hint="MovieLong"
+            android:inputType="text"
+            app:layout_constraintBottom_toTopOf="@+id/etMAgeAllowed"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/etMReleaseDate" />
+
+        <EditText
+            android:id="@+id/etMAgeAllowed"
+            android:layout_width="208dp"
+            android:layout_height="56dp"
+            android:layout_marginStart="37dp"
+            android:layout_marginTop="2dp"
+            android:layout_marginEnd="166dp"
+            android:layout_marginBottom="2dp"
+            android:ems="10"
+            android:hint="AgeAllowed"
+            android:inputType="text"
+            app:layout_constraintBottom_toTopOf="@+id/etMCategory"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/etMLong" />
+
+        <EditText
+            android:id="@+id/etMCategory"
+            android:layout_width="208dp"
+            android:layout_height="54dp"
+            android:layout_marginStart="35dp"
+            android:layout_marginTop="2dp"
+            android:layout_marginEnd="166dp"
+            android:layout_marginBottom="2dp"
+            android:ems="10"
+            android:hint="MovieCategory"
+            android:inputType="text"
+            app:layout_constraintBottom_toTopOf="@+id/etMDescription"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/etMAgeAllowed" />
+
+        <EditText
+            android:id="@+id/etMDescription"
+            android:layout_width="341dp"
+            android:layout_height="78dp"
+            android:layout_marginStart="35dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginEnd="35dp"
+            android:layout_marginBottom="25dp"
+            android:ems="10"
+            android:hint="Description"
+            android:inputType="text"
+            app:layout_constraintBottom_toTopOf="@+id/btnAddmovie"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/etMCategory" />
+
+        <Button
+            android:id="@+id/btnAddmovie"
+            android:layout_width="163dp"
+            android:layout_height="63dp"
+            android:layout_marginStart="124dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginEnd="124dp"
+            android:layout_marginBottom="40dp"
+            android:background="#673AB7"
+            android:backgroundTint="#673AB7"
+            android:text="addmovie"
+            android:textAppearance="@style/TextAppearance.AppCompat.Large"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/etMDescription" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</FrameLayout>
