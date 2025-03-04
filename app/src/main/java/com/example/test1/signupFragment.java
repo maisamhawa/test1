@@ -111,8 +111,8 @@ public class signupFragment extends Fragment {
                                  if (task.isSuccessful()) {
                                      if(password.length()<6){ Toast.makeText(getActivity(), "Password must be at least 6 characters! Failed to sign up", Toast.LENGTH_LONG).show();}
                                      Toast.makeText(getActivity(), "User created successfully", Toast.LENGTH_SHORT).show();
-                                     //gotoAddMovie(); TODO
-                                     gotoAllMovie();
+                                     gotoAddMovie();
+                                   //  gotoAllMovie();TODO
                                  } else {
                                      Toast.makeText(getActivity(), "Error: " + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
                                  }

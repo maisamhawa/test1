@@ -132,8 +132,8 @@ public class LoginFragment extends Fragment {
 
                                     if (task.isSuccessful()) {
                                         Toast.makeText(getActivity(), "Successfully logged in", Toast.LENGTH_LONG).show();
-                                        //gotoAddMovie(); TODO
-                                        gotoAllMovie();
+                                        gotoAddMovie();
+                                       // gotoAllMovie();TODO
                                     } else {
                                         String errorMessage = task.getException().getMessage();
 

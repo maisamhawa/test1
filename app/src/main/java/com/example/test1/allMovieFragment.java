@@ -23,6 +23,7 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 
 /**
@@ -32,7 +33,8 @@ import java.util.ArrayList;
  */
 public class allMovieFragment extends Fragment {
     private FirebaseServices fbs;
-    private ArrayList<Movie>  movies;
+    //private ArrayList<Movie>  movies; //TODO
+    private ArrayList  movies;
     private RecyclerView recyclerView;
     private MovieListAdapter adapter;
     //private MovieAdapter adapter; TODO
@@ -84,10 +86,10 @@ public class allMovieFragment extends Fragment {
         recyclerView = getView().findViewById(R.id.rvMoviesmovieFragment);
 
         recyclerView.setHasFixedSize(true);
+       // movies = new ArrayList<>(Arrays.asList("AA","BB","CC")); // TODO
         movies = new ArrayList<>();
-
-        //layoutManager = new LinearLayoutManager(getActivity());
-        //recyclerView.setLayoutManager(layoutManager);
+        layoutManager = new LinearLayoutManager(getActivity());
+        recyclerView.setLayoutManager(layoutManager);
 
         adapter = new MovieListAdapter(getActivity(), movies);
         //adapter = new MovieAdapter(getActivity(), movies); TODO
@@ -99,7 +101,7 @@ public class allMovieFragment extends Fragment {
             public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
                 for (DocumentSnapshot dataSnapshot : queryDocumentSnapshots.getDocuments()) {
                     Movie movie = dataSnapshot.toObject(Movie.class);
-                    movies.add(movie);
+                    movies.add(movie.getMovieName());
                 }
                 adapter.notifyDataSetChanged();
             }
@@ -110,5 +112,6 @@ public class allMovieFragment extends Fragment {
                 Log.e("AllMoviesFragment", e.getMessage());
             }
         });
+
     }
 }
