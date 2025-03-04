@@ -34,7 +34,8 @@ public class allMovieFragment extends Fragment {
     private FirebaseServices fbs;
     private ArrayList<Movie>  movies;
     private RecyclerView recyclerView;
-    private MovieAdapter adapter;
+    private MovieListAdapter adapter;
+    //private MovieAdapter adapter; TODO
     private RecyclerView.LayoutManager layoutManager;
 
     // TODO: Rename parameter arguments, choose names that match
@@ -82,26 +83,24 @@ public class allMovieFragment extends Fragment {
         fbs=FirebaseServices.getInstance();
         recyclerView = getView().findViewById(R.id.rvMoviesmovieFragment);
 
-        //recyclerView.setHasFixedSize(false);
+        recyclerView.setHasFixedSize(true);
         movies = new ArrayList<>();
 
-        layoutManager = new LinearLayoutManager(getActivity());
-        recyclerView.setLayoutManager(layoutManager);
+        //layoutManager = new LinearLayoutManager(getActivity());
+        //recyclerView.setLayoutManager(layoutManager);
 
-        adapter = new MovieAdapter(getActivity(), movies);
+        adapter = new MovieListAdapter(getActivity(), movies);
+        //adapter = new MovieAdapter(getActivity(), movies); TODO
         recyclerView.setAdapter(adapter);
 
         fbs.getFire().collection("movies").get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
             @SuppressLint("NotifyDataSetChanged")
             @Override
             public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
-
                 for (DocumentSnapshot dataSnapshot : queryDocumentSnapshots.getDocuments()) {
                     Movie movie = dataSnapshot.toObject(Movie.class);
-
                     movies.add(movie);
                 }
-
                 adapter.notifyDataSetChanged();
             }
         }).addOnFailureListener(new OnFailureListener() {

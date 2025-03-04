@@ -92,49 +92,56 @@ public class signupFragment extends Fragment {
         etPassword = getView().findViewById(R.id.etPasswordSignup);
         btnSignup = getView().findViewById(R.id.btnSignup);
         btnSignup.setOnClickListener(new View.OnClickListener() {
-                                         @Override
-                                         public void onClick(View view) {
-                                             //Data validation
-                                             String username = etUsername.getText().toString();
-                                             String password = etPassword.getText().toString();
+         @Override
+         public void onClick(View view) {
+             //Data validation
+             String username = etUsername.getText().toString();
+             String password = etPassword.getText().toString();
 
-                                             if (username.trim().isEmpty() || password.trim().isEmpty()) {
-                                                 Toast.makeText(getActivity(), "Email or password is empty! Failed to sign up", Toast.LENGTH_LONG).show();
-                                             } else if (!Patterns.EMAIL_ADDRESS.matcher(username).matches()) {
-                                                 Toast.makeText(getActivity(), "Invalid email format! Failed to sign up", Toast.LENGTH_LONG).show();
-                                             } else {
-                                                 Log.d("TAG", "Before Firebase operation");
-                                                 fbs.getAuth().createUserWithEmailAndPassword(username, password)
-                                                         .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                                                             @Override
-                                                             public void onComplete(@NonNull Task<AuthResult> task) {
-                                                                 if (task.isSuccessful()) {
-                                                                     if(password.length()<6){ Toast.makeText(getActivity(), "Password must be at least 6 characters! Failed to sign up", Toast.LENGTH_LONG).show();}
-                                                                     Toast.makeText(getActivity(), "User created successfully", Toast.LENGTH_SHORT).show();
-                                                                     gotoAddMovie();
-                                                                 } else
-                                                                     Toast.makeText(getActivity(), "Error: " + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
-                                                             }
-                                                             private void gotoAddMovie() {
-                                                                 FragmentTransaction ft = getActivity().getFragmentManager().beginTransaction();
-                                                                 ft.replace(R.id.Framelayoutmain, new AddMovieF());
-                                                                 //ft.replace(R.id.Framelayoutmain, new allMovieFragment());
-                                                                 ft.commit();
-                                                             }
-                                                         })
-                                                         .addOnFailureListener(new OnFailureListener() {
-                                                             @Override
-                                                             public void onFailure(@NonNull Exception e) {
-                                                                 Toast.makeText(getActivity(), "Failure listener triggered: " + e.getMessage(), Toast.LENGTH_SHORT).show();  // Show failure message
-                                                             }
+             if (username.trim().isEmpty() || password.trim().isEmpty()) {
+                 Toast.makeText(getActivity(), "Email or password is empty! Failed to sign up", Toast.LENGTH_LONG).show();
+             } else if (!Patterns.EMAIL_ADDRESS.matcher(username).matches()) {
+                 Toast.makeText(getActivity(), "Invalid email format! Failed to sign up", Toast.LENGTH_LONG).show();
+             } else {
+                 Log.d("TAG", "Before Firebase operation");
+                 fbs.getAuth().createUserWithEmailAndPassword(username, password)
+                         .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                             @Override
+                             public void onComplete(@NonNull Task<AuthResult> task) {
+                                 if (task.isSuccessful()) {
+                                     if(password.length()<6){ Toast.makeText(getActivity(), "Password must be at least 6 characters! Failed to sign up", Toast.LENGTH_LONG).show();}
+                                     Toast.makeText(getActivity(), "User created successfully", Toast.LENGTH_SHORT).show();
+                                     //gotoAddMovie(); TODO
+                                     gotoAllMovie();
+                                 } else {
+                                     Toast.makeText(getActivity(), "Error: " + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
+                                 }
+                             }
+                         })
+                         .addOnFailureListener(new OnFailureListener() {
+                             @Override
+                             public void onFailure(@NonNull Exception e) {
+                                 Toast.makeText(getActivity(), "Failure listener triggered: " + e.getMessage(), Toast.LENGTH_SHORT).show();  // Show failure message
+                             }
 
-                                                         });
+                         });
 
 
 
-                                             }
-                                         }
-                                     });
+             }
+         }
+     });
+    }
+
+    private void gotoAddMovie() {
+        FragmentTransaction ft = getActivity().getFragmentManager().beginTransaction();
+        ft.replace(R.id.Framelayoutmain, new AddMovieF());
+        ft.commit();
+    }
+    private void gotoAllMovie() {
+        FragmentTransaction ft = getActivity().getFragmentManager().beginTransaction();
+        ft.replace(R.id.Framelayoutmain, new allMovieFragment());
+        ft.commit();
     }
 }
                     /*{
