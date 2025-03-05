@@ -2,10 +2,13 @@ package com.example.test1;
 
 import android.annotation.SuppressLint;
 import android.app.Fragment;
+import android.app.FragmentTransaction;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 
+import androidx.core.content.ContextCompat;
+import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -13,6 +16,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnFailureListener;
@@ -32,6 +36,7 @@ import java.util.Arrays;
  * create an instance of this fragment.
  */
 public class allMovieFragment extends Fragment {
+    private Button newmovie;
     private FirebaseServices fbs;
     //private ArrayList<Movie>  movies; //TODO
     private ArrayList  movies;
@@ -39,6 +44,7 @@ public class allMovieFragment extends Fragment {
     private MovieListAdapter adapter;
     //private MovieAdapter adapter; TODO
     private RecyclerView.LayoutManager layoutManager;
+
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -82,6 +88,8 @@ public class allMovieFragment extends Fragment {
     @Override
     public void onStart() {
         super.onStart();
+        newmovie=getView().findViewById(R.id.btnaddNmovie);
+
         fbs=FirebaseServices.getInstance();
         recyclerView = getView().findViewById(R.id.rvMoviesmovieFragment);
 
@@ -94,7 +102,9 @@ public class allMovieFragment extends Fragment {
         adapter = new MovieListAdapter(getActivity(), movies);
         //adapter = new MovieAdapter(getActivity(), movies); TODO
         recyclerView.setAdapter(adapter);
-
+        DividerItemDecoration divider = new DividerItemDecoration(recyclerView.getContext(), DividerItemDecoration.VERTICAL);
+        divider.setDrawable(ContextCompat.getDrawable(getContext(), R.drawable.divider_layout));
+        recyclerView.addItemDecoration(divider);
         fbs.getFire().collection("movies").get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
             @SuppressLint("NotifyDataSetChanged")
             @Override
@@ -112,6 +122,17 @@ public class allMovieFragment extends Fragment {
                 Log.e("AllMoviesFragment", e.getMessage());
             }
         });
+        newmovie.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                gotoAddMovie();
+            }
 
+            private void gotoAddMovie() {
+                FragmentTransaction ft = getActivity().getFragmentManager().beginTransaction();
+                ft.replace(R.id.Framelayoutmain, new AddMovieF());
+                ft.commit();
+            }
+        });
     }
 }

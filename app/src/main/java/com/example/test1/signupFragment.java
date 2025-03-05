@@ -111,8 +111,7 @@ public class signupFragment extends Fragment {
                                  if (task.isSuccessful()) {
                                      if(password.length()<6){ Toast.makeText(getActivity(), "Password must be at least 6 characters! Failed to sign up", Toast.LENGTH_LONG).show();}
                                      Toast.makeText(getActivity(), "User created successfully", Toast.LENGTH_SHORT).show();
-                                     gotoAddMovie();
-                                   //  gotoAllMovie();TODO
+                                     gotoAllMovie();
                                  } else {
                                      Toast.makeText(getActivity(), "Error: " + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
                                  }
@@ -133,56 +132,10 @@ public class signupFragment extends Fragment {
      });
     }
 
-    private void gotoAddMovie() {
-        FragmentTransaction ft = getActivity().getFragmentManager().beginTransaction();
-        ft.replace(R.id.Framelayoutmain, new AddMovieF());
-        ft.commit();
-    }
+
     private void gotoAllMovie() {
         FragmentTransaction ft = getActivity().getFragmentManager().beginTransaction();
         ft.replace(R.id.Framelayoutmain, new allMovieFragment());
         ft.commit();
     }
 }
-                    /*{
-                    fbs.getAuth().fetchSignInMethodsForEmail(username)
-                            .addOnCompleteListener(new OnCompleteListener<SignInMethodQueryResult>() {
-                                @Override
-                                public void onComplete(@NonNull Task<SignInMethodQueryResult> task) {
-                                    if (task.isSuccessful()) {
-                                        // If the email is already registered
-                                        List<String> signInMethods = task.getResult().getSignInMethods();
-
-// Print each sign-in method
-                                        for (String method : signInMethods) {
-                                            Toast.makeText(getActivity(), method, Toast.LENGTH_SHORT).show();
-                                        }
-                                        if (!signInMethods.isEmpty()) {
-                                            Toast.makeText(getActivity(), "This email is already registered! Failed to sign up", Toast.LENGTH_SHORT).show();
-                                        } else if (password.length() < 6) {
-                                            Toast.makeText(getActivity(), "Password must be at least 6 characters! Failed to sign up", Toast.LENGTH_LONG).show();
-                                        } else {
-                                            //Signup procedure
-                                            fbs.getAuth().createUserWithEmailAndPassword(username, password) // .getException().getMessage()
-                                                    .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                                                        @Override
-                                                        public void onComplete(@NonNull Task<AuthResult> task) {
-                                                            Toast.makeText(getActivity(), "Successfully signed up", Toast.LENGTH_LONG).show();
-                                                            gotoAddMovie();
-                                                        }
-
-                                                        private void gotoAddMovie() {
-                                                            FragmentTransaction ft = getActivity().getFragmentManager().beginTransaction();
-                                                            ft.replace(R.id.Framelayoutmain, new AddMovieF());
-                                                            ft.commit();
-                                                        }
-                                                    });
-                                        }
-                                    }  else {
-                                        Toast.makeText(getActivity(), "Failed to sign up: " + task.getException().getMessage(), Toast.LENGTH_LONG).show();
-                                    }
-                                }
-                            });
-                }
-                */
-

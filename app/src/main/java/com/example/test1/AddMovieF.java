@@ -38,10 +38,13 @@ import java.time.Instant;
  */
 public class AddMovieF extends Fragment {
 
+    private static final int GALLERY_REQUEST_CODE = 123;
+    private ImageView img;
 
     private EditText etName, etReleaseDate, etMovieLong, etAgeAllowed, etDescription, etCategory;
-    private Button btnAdd;
+    private Button btnAdd ,btnback;
     private FirebaseServices fbs;
+
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -106,6 +109,9 @@ public class AddMovieF extends Fragment {
         etCategory = getActivity().findViewById(R.id.etMCategory);
         fbs = FirebaseServices.getInstance();
         btnAdd = getActivity().findViewById(R.id.btnAddmovie);
+        btnback=getActivity().findViewById(R.id.btnbacktolist);
+        img = getView().findViewById(R.id.ivMoviephoto);
+
 
         btnAdd.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -118,33 +124,64 @@ public class AddMovieF extends Fragment {
                 MAgeAllowed = etAgeAllowed.getText().toString();
                 MCategory = etCategory.getText().toString();
 
-                if (MDescription.trim().isEmpty() || MLong.trim().isEmpty() || MCategory.trim().isEmpty() ||
-                        MAgeAllowed.trim().isEmpty() || MName.trim().isEmpty() || MReleaseDate.trim().isEmpty()) {
-                    Toast.makeText(getActivity(), "Something is Empty", Toast.LENGTH_SHORT).show();
-                    return;
+                    if (MDescription.trim().isEmpty() || MLong.trim().isEmpty() || MCategory.trim().isEmpty() ||
+                            MAgeAllowed.trim().isEmpty() || MName.trim().isEmpty() || MReleaseDate.trim().isEmpty()){
+                        Toast.makeText(getActivity(), "Something is Empty", Toast.LENGTH_SHORT).show();
+                        return;
+                    }
+
+                    Movie movie = new Movie(MName, MReleaseDate, MLong, MAgeAllowed, MDescription, MCategory,"");
+                    fbs.getFire().collection("movies").add(movie).addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+                        @Override
+                        public void onSuccess(DocumentReference documentReference) {
+                            Toast.makeText(getActivity(), "Movie added: " + documentReference.getId(), Toast.LENGTH_SHORT).show();
+                            gotoallMovieFragment();
+                        }
+                    }).addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            Toast.makeText(getActivity(), "Failed to add movie: " + e.getMessage(), Toast.LENGTH_SHORT).show();  // Added Toast
+                        }
+                    });
                 }
 
-                Movie movie = new Movie(MName, MReleaseDate, MLong, MAgeAllowed, MDescription, MCategory);
-                fbs.getFire().collection("movies").add(movie).addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
-                    @Override
-                    public void onSuccess(DocumentReference documentReference) {
-                        Toast.makeText(getActivity(), "Movie added: " + documentReference.getId(), Toast.LENGTH_SHORT).show();
-                        gotoallMovieFragment();
-                    }
-                }).addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        Toast.makeText(getActivity(), "Failed to add movie: " + e.getMessage(), Toast.LENGTH_SHORT).show();  // Added Toast
-                    }
-                });
+        });
+        btnback.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                gotoallMovieFragment();
             }
         });
+
+        /*img.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                openGallery();
+            }
+        });
+
+         */
     }
         private void gotoallMovieFragment() {
             FragmentTransaction ft = getActivity().getFragmentManager().beginTransaction();
             ft.replace(R.id.Framelayoutmain, new allMovieFragment());
             ft.commit();
         }
+    /*private void openGallery() {
+        Intent galleryIntent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+        startActivityForResult(galleryIntent, GALLERY_REQUEST_CODE);
+    }
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
 
+        if (requestCode == GALLERY_REQUEST_CODE && resultCode == getActivity().RESULT_OK && data != null) {
+            Uri selectedImageUri = data.getData();
+            img.setImageURI(selectedImageUri);
+            utils.uploadImage(getActivity(), selectedImageUri);
+        }
+    }
+
+     */
     }
 

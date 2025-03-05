@@ -132,8 +132,7 @@ public class LoginFragment extends Fragment {
 
                                     if (task.isSuccessful()) {
                                         Toast.makeText(getActivity(), "Successfully logged in", Toast.LENGTH_LONG).show();
-                                        gotoAddMovie();
-                                       // gotoAllMovie();TODO
+                                        gotoAllMovie();
                                     } else {
                                         String errorMessage = task.getException().getMessage();
 
@@ -157,11 +156,6 @@ public class LoginFragment extends Fragment {
         });
     }
 
-    private void gotoAddMovie() {
-        FragmentTransaction ft = getActivity().getFragmentManager().beginTransaction();
-        ft.replace(R.id.Framelayoutmain, new AddMovieF());
-        ft.commit();
-    }
 
     private void gotoAllMovie() {
         FragmentTransaction ft = getActivity().getFragmentManager().beginTransaction();
