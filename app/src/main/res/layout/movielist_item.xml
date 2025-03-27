@@ -21,8 +21,8 @@
         android:orientation="vertical"
         android:layout_gravity="center">
 
-        <ImageView
-            android:id="@+id/imgMoviePoster"
+        <ImageButton
+            android:id="@+id/MoviePoster"
             android:layout_width="60dp"
             android:layout_height="70dp"
             android:scaleType="centerCrop"
@@ -37,6 +37,9 @@
         android:padding="4dp"
         android:text="movieName"
         android:textSize="20sp"
-        android:textStyle="bold" />
+        android:textStyle="bold"
+        android:clickable="true"
+        android:focusable="true"
+        android:layout_gravity="center_vertical"/>
 
 </LinearLayout>

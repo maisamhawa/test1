@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/FramelayoutDetails"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MovieDetailsActivity">
+
+    <Button
+        android:id="@+id/btnbackD"
+        android:layout_width="153dp"
+        android:layout_height="64dp"
+        android:layout_marginStart="233dp"
+        android:layout_marginTop="50dp"
+        android:layout_marginEnd="25dp"
+        android:layout_marginBottom="21dp"
+        android:text="Back"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/descriptionD" />
+
+    <TextView
+        android:id="@+id/movieNameD"
+        android:layout_width="149dp"
+        android:layout_height="40dp"
+        android:layout_marginStart="18dp"
+        android:layout_marginTop="65dp"
+        android:layout_marginEnd="65dp"
+        android:layout_marginBottom="11dp"
+        android:text="Movie Name"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/releaseD"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/imageViewD"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.52" />
+
+    <TextView
+        android:id="@+id/releaseD"
+        android:layout_width="80dp"
+        android:layout_height="25dp"
+        android:layout_marginStart="7dp"
+        android:layout_marginTop="11dp"
+        android:layout_marginEnd="72dp"
+        android:layout_marginBottom="74dp"
+        android:text="releaseDate"
+        app:layout_constraintBottom_toTopOf="@+id/ageallowedD"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/imageViewD"
+        app:layout_constraintTop_toBottomOf="@+id/movieNameD" />
+
+    <ImageView
+        android:id="@+id/imageViewD"
+        android:layout_width="163dp"
+        android:layout_height="143dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="65dp"
+        android:layout_marginEnd="18dp"
+        android:layout_marginBottom="20dp"
+        app:layout_constraintBottom_toTopOf="@+id/ageallowedD"
+        app:layout_constraintEnd_toStartOf="@+id/movieNameD"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/ic_launcher_background" />
+
+    <TextView
+        android:id="@+id/descriptionD"
+        android:layout_width="320dp"
+        android:layout_height="202dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="19dp"
+        android:layout_marginEnd="75dp"
+        android:layout_marginBottom="50dp"
+        android:text="description"
+        app:layout_constraintBottom_toTopOf="@+id/btnbackD"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/categoryD" />
+
+    <TextView
+        android:id="@+id/ageallowedD"
+        android:layout_width="83dp"
+        android:layout_height="24dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="183dp"
+        android:layout_marginBottom="33dp"
+        android:text="ageAllowed"
+        app:layout_constraintBottom_toTopOf="@+id/categoryD"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/longD"
+        app:layout_constraintTop_toBottomOf="@+id/imageViewD" />
+
+    <TextView
+        android:id="@+id/longD"
+        android:layout_width="105dp"
+        android:layout_height="26dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginBottom="10dp"
+        android:text="longD"
+        app:layout_constraintBottom_toTopOf="@+id/categoryD"
+        app:layout_constraintEnd_toStartOf="@+id/ageallowedD"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageViewD" />
+
+    <TextView
+        android:id="@+id/categoryD"
+        android:layout_width="139dp"
+        android:layout_height="36dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="256dp"
+        android:layout_marginBottom="29dp"
+        android:text="category"
+        app:layout_constraintBottom_toTopOf="@+id/descriptionD"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/longD" />
+</androidx.constraintlayout.widget.ConstraintLayout>

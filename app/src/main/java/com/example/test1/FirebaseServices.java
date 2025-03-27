@@ -5,6 +5,7 @@ import android.net.Uri;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
 public class FirebaseServices {
     private static FirebaseServices instance;
@@ -19,6 +20,10 @@ public class FirebaseServices {
 
     public void setSelectedImageURL(Uri selectedImageURL) {
         this.selectedImageURL = selectedImageURL;
+    }
+
+    public StorageReference getReference(String path) {
+        return storage.getReference().child(path);
     }
 
     public FirebaseFirestore getFire()

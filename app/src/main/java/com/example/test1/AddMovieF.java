@@ -4,8 +4,11 @@ package com.example.test1;
 import static android.app.Activity.RESULT_OK;
 import static androidx.core.app.PendingIntentCompat.getActivity;
 
+import android.app.Activity;
 import android.app.FragmentTransaction;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 
@@ -20,7 +23,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageView;
+import android.widget.ImageButton;
 import android.widget.Toast;
 
 
@@ -28,7 +31,11 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.storage.StorageReference;
 
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
 import java.time.Instant;
 
 /**
@@ -39,7 +46,11 @@ import java.time.Instant;
 public class AddMovieF extends Fragment {
 
     private static final int GALLERY_REQUEST_CODE = 123;
-    private ImageView img;
+    private static final int RESULT_LOAD_IMAGE = 1;
+  //jadeed
+    private ImageButton image;
+    private Uri imageUri;
+
 
     private EditText etName, etReleaseDate, etMovieLong, etAgeAllowed, etDescription, etCategory;
     private Button btnAdd ,btnback;
@@ -54,6 +65,8 @@ public class AddMovieF extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+    //jadeed
+    private Intent data;
 
     public AddMovieF() {
     }
@@ -110,7 +123,8 @@ public class AddMovieF extends Fragment {
         fbs = FirebaseServices.getInstance();
         btnAdd = getActivity().findViewById(R.id.btnAddmovie);
         btnback=getActivity().findViewById(R.id.btnbacktolist);
-        img = getView().findViewById(R.id.ivMoviephoto);
+       //jadeed
+        image = getActivity().findViewById(R.id.imagebtn);
 
 
         btnAdd.setOnClickListener(new View.OnClickListener() {
@@ -123,29 +137,47 @@ public class AddMovieF extends Fragment {
                 MDescription = etDescription.getText().toString();
                 MAgeAllowed = etAgeAllowed.getText().toString();
                 MCategory = etCategory.getText().toString();
+                //image=image.get
 
                     if (MDescription.trim().isEmpty() || MLong.trim().isEmpty() || MCategory.trim().isEmpty() ||
                             MAgeAllowed.trim().isEmpty() || MName.trim().isEmpty() || MReleaseDate.trim().isEmpty()){
                         Toast.makeText(getActivity(), "Something is Empty", Toast.LENGTH_SHORT).show();
                         return;
                     }
-
-                    Movie movie = new Movie(MName, MReleaseDate, MLong, MAgeAllowed, MDescription, MCategory,"");
-                    fbs.getFire().collection("movies").add(movie).addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+                    if (imageUri == null) {
+                        Toast.makeText(getActivity(), "Please select an image", Toast.LENGTH_SHORT).show();
+                        return;
+                    }
+                    // Upload image first
+                    uploadImageToFirebase(imageUri, new OnImageUploadListener() {
                         @Override
-                        public void onSuccess(DocumentReference documentReference) {
-                            Toast.makeText(getActivity(), "Movie added: " + documentReference.getId(), Toast.LENGTH_SHORT).show();
-                            gotoallMovieFragment();
+                        public void onUploadSuccess(String imageUrl) {
+                            // Save movie with image URL
+                            Movie movie = new Movie(MName, MReleaseDate, MLong, MAgeAllowed, MDescription, MCategory, imageUrl);
+                            fbs.getFire().collection("movies").add(movie)
+                                    .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+                                        @Override
+                                        public void onSuccess(DocumentReference documentReference) {
+                                            Toast.makeText(getActivity(), "Movie added!", Toast.LENGTH_SHORT).show();
+                                            gotoallMovieFragment();
+                                        }
+                                    })
+                                    .addOnFailureListener(new OnFailureListener() {
+                                        @Override
+                                        public void onFailure(@NonNull Exception e) {
+                                            Toast.makeText(getActivity(), "Failed: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                                        }
+                                    });
                         }
-                    }).addOnFailureListener(new OnFailureListener() {
+
                         @Override
-                        public void onFailure(@NonNull Exception e) {
-                            Toast.makeText(getActivity(), "Failed to add movie: " + e.getMessage(), Toast.LENGTH_SHORT).show();  // Added Toast
+                        public void onUploadFailure(Exception e) {
+                            Toast.makeText(getActivity(), "Image upload failed: " + e.getMessage(), Toast.LENGTH_SHORT).show();
                         }
                     });
-                }
-
+            }
         });
+
         btnback.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -153,35 +185,88 @@ public class AddMovieF extends Fragment {
             }
         });
 
-        /*img.setOnClickListener(new View.OnClickListener() {
+        //jadeed
+        image.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                openGallery();
+
+                getImageFromAlbum();
             }
         });
-
-         */
     }
-        private void gotoallMovieFragment() {
+
+    private void uploadImageToFirebase(Uri imageUri, OnImageUploadListener listener) {
+        Log.d("ImageUpload", "Starting upload...");
+        StorageReference storageRef = fbs.getInstance().getReference("movie_images");
+        String fileName = System.currentTimeMillis() + ".jpg";
+        StorageReference imageRef = storageRef.child(fileName);
+
+        Log.d("ImageUpload", "File name: " + fileName);
+
+        imageRef.putFile(imageUri)
+                .addOnSuccessListener(taskSnapshot -> {
+                    Log.d("ImageUpload", "Upload successful!");
+                    imageRef.getDownloadUrl().addOnSuccessListener(uri -> {
+                        String imageUrl = uri.toString();
+                        Log.d("ImageUpload", "Download URL: " + imageUrl);
+                        listener.onUploadSuccess(imageUrl);
+                    });
+                })
+                .addOnFailureListener(e -> {
+                    Log.e("ImageUpload", "Upload failed: " + e.getMessage());
+                    listener.onUploadFailure(e);
+                });
+    }
+
+    // Callback interface for image upload success/failure
+    interface OnImageUploadListener {
+        void onUploadSuccess(String imageUrl);
+        void onUploadFailure(Exception e);
+    }
+
+    //jadeed
+    private void getImageFromAlbum() {
+        try {
+            //Intent i = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+            Intent photoPickerIntent = new Intent(Intent.ACTION_PICK);
+            photoPickerIntent.setType("image/*");
+            startActivityForResult(photoPickerIntent, RESULT_LOAD_IMAGE);
+        } catch (Exception exp) {
+            Log.i("Error", exp.toString());
+        }
+    }
+    //jadedd
+        @Override
+        public void onActivityResult(int reqCode, int resultCode, Intent data) {
+            super.onActivityResult(reqCode, resultCode, data);
+            if (resultCode == RESULT_OK) {
+                try {
+                    imageUri = data.getData();
+                    final InputStream imageStream = getActivity().getContentResolver().openInputStream(imageUri);
+                    final Bitmap selectedImage = BitmapFactory.decodeStream(imageStream);
+                    // Resize the image to fit the ImageButton
+                    image.post(new Runnable() {
+                        @Override
+                        public void run() {
+                            int targetWidth = image.getWidth();
+                            int targetHeight = image.getHeight();
+                            Bitmap scaledBitmap = Bitmap.createScaledBitmap(selectedImage, targetWidth, targetHeight, true);
+                            image.setImageBitmap(scaledBitmap);
+                        }
+                    });
+                } catch (FileNotFoundException e) {
+                    e.printStackTrace();
+                    Toast.makeText(getActivity(), "Something went wrong", Toast.LENGTH_LONG).show();
+                }
+            } else {
+                Toast.makeText(getActivity(), "You haven't picked Image",Toast.LENGTH_LONG).show();
+            }
+    }
+
+    private void gotoallMovieFragment() {
             FragmentTransaction ft = getActivity().getFragmentManager().beginTransaction();
             ft.replace(R.id.Framelayoutmain, new allMovieFragment());
             ft.commit();
         }
-    /*private void openGallery() {
-        Intent galleryIntent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-        startActivityForResult(galleryIntent, GALLERY_REQUEST_CODE);
-    }
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-
-        if (requestCode == GALLERY_REQUEST_CODE && resultCode == getActivity().RESULT_OK && data != null) {
-            Uri selectedImageUri = data.getData();
-            img.setImageURI(selectedImageUri);
-            utils.uploadImage(getActivity(), selectedImageUri);
-        }
-    }
-
-     */
     }
 

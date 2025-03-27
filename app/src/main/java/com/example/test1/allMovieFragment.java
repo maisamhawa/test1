@@ -8,6 +8,7 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 
 import androidx.core.content.ContextCompat;
+import androidx.fragment.app.FragmentActivity;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -128,11 +129,12 @@ public class allMovieFragment extends Fragment {
                 gotoAddMovie();
             }
 
-            private void gotoAddMovie() {
-                FragmentTransaction ft = getActivity().getFragmentManager().beginTransaction();
-                ft.replace(R.id.Framelayoutmain, new AddMovieF());
-                ft.commit();
-            }
+
         });
+    }
+    private void gotoAddMovie() {
+        FragmentTransaction ft = getActivity().getFragmentManager().beginTransaction();
+        ft.replace(R.id.Framelayoutmain, new AddMovieF());
+        ft.commit();
     }
 }

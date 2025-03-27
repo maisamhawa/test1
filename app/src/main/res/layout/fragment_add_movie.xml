@@ -122,14 +122,16 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/btnAddmovie" />
 
-        <ImageView
-            android:id="@+id/ivMoviephoto"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
-            android:layout_marginStart="31dp"
-            android:layout_marginTop="84dp"
-            android:layout_marginEnd="35dp"
-            android:layout_marginBottom="96dp"
+        <ImageButton
+            android:id="@+id/imagebtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="18dp"
+            android:layout_marginTop="69dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginBottom="85dp"
+            android:scaleType="centerCrop"
+            android:adjustViewBounds="true"
             android:src="@drawable/ic_launcher_background"
             app:layout_constraintBottom_toTopOf="@+id/etMDescription"
             app:layout_constraintEnd_toEndOf="parent"

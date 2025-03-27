@@ -97,23 +97,11 @@ public class LoginFragment extends Fragment {
             public void onClick(View view) {
                 gotoSignupFragment();
             }
-
-            private void gotoSignupFragment() {
-                FragmentTransaction ft = getActivity().getFragmentManager().beginTransaction();
-                ft.replace(R.id.Framelayoutmain, new signupFragment());
-                ft.commit();
-            }
         });
         forgotPassword.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 gotoforgotPassword();
-            }
-
-            private void gotoforgotPassword() {
-                FragmentTransaction ft = getActivity().getFragmentManager().beginTransaction();
-                ft.replace(R.id.Framelayoutmain, new forgotPassword());
-                ft.commit();
             }
         });
         btnLogin.setOnClickListener(new View.OnClickListener() {
@@ -146,17 +134,22 @@ public class LoginFragment extends Fragment {
 
                                     }
                                 }
-
-                                ;
-
                             });
 
                 }
             }
         });
     }
-
-
+    private void gotoforgotPassword() {
+        FragmentTransaction ft = getActivity().getFragmentManager().beginTransaction();
+        ft.replace(R.id.Framelayoutmain, new forgotPassword());
+        ft.commit();
+    }
+    private void gotoSignupFragment() {
+        FragmentTransaction ft = getActivity().getFragmentManager().beginTransaction();
+        ft.replace(R.id.Framelayoutmain, new signupFragment());
+        ft.commit();
+    }
     private void gotoAllMovie() {
         FragmentTransaction ft = getActivity().getFragmentManager().beginTransaction();
         ft.replace(R.id.Framelayoutmain, new allMovieFragment());
