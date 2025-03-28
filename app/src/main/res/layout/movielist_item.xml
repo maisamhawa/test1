@@ -21,7 +21,7 @@
         android:orientation="vertical"
         android:layout_gravity="center">
 
-        <ImageButton
+        <ImageView
             android:id="@+id/MoviePoster"
             android:layout_width="60dp"
             android:layout_height="70dp"

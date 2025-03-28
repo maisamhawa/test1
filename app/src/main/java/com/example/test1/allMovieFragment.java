@@ -8,7 +8,6 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 
 import androidx.core.content.ContextCompat;
-import androidx.fragment.app.FragmentActivity;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -23,12 +22,10 @@ import android.widget.Toast;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 
 
 /**
@@ -40,7 +37,8 @@ public class allMovieFragment extends Fragment {
     private Button newmovie;
     private FirebaseServices fbs;
     //private ArrayList<Movie>  movies; //TODO
-    private ArrayList  movies;
+    private ArrayList<String> movies;
+    private ArrayList<String> images;
     private RecyclerView recyclerView;
     private MovieListAdapter adapter;
     //private MovieAdapter adapter; TODO
@@ -95,13 +93,12 @@ public class allMovieFragment extends Fragment {
         recyclerView = getView().findViewById(R.id.rvMoviesmovieFragment);
 
         recyclerView.setHasFixedSize(true);
-       // movies = new ArrayList<>(Arrays.asList("AA","BB","CC")); // TODO
-        movies = new ArrayList<>();
+        movies = new ArrayList<String>();
+        images = new ArrayList<String>();
         layoutManager = new LinearLayoutManager(getActivity());
         recyclerView.setLayoutManager(layoutManager);
 
-        adapter = new MovieListAdapter(getActivity(), movies);
-        //adapter = new MovieAdapter(getActivity(), movies); TODO
+        adapter = new MovieListAdapter(getActivity(), movies, images);
         recyclerView.setAdapter(adapter);
         DividerItemDecoration divider = new DividerItemDecoration(recyclerView.getContext(), DividerItemDecoration.VERTICAL);
         divider.setDrawable(ContextCompat.getDrawable(getContext(), R.drawable.divider_layout));
@@ -113,6 +110,8 @@ public class allMovieFragment extends Fragment {
                 for (DocumentSnapshot dataSnapshot : queryDocumentSnapshots.getDocuments()) {
                     Movie movie = dataSnapshot.toObject(Movie.class);
                     movies.add(movie.getMovieName());
+                    images.add(movie.getphoto());
+
                 }
                 adapter.notifyDataSetChanged();
             }

@@ -125,7 +125,7 @@ public String getphoto() {
         return photo;
     }
  public void setphoto(String photo) {
-        photo = photo;
+        this.photo = photo;
     }
 
 
