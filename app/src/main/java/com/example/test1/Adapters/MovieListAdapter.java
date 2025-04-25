@@ -1,4 +1,4 @@
-package com.example.test1;
+package com.example.test1.Adapters;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -11,10 +11,15 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.content.Intent;
 import android.widget.ImageView;
 import com.bumptech.glide.Glide;
+import com.example.test1.classes.FirebaseServices;
+import com.example.test1.MovieDetailsActivity;
+import com.example.test1.R;
+
 import java.util.ArrayList;
 
 public class MovieListAdapter extends RecyclerView.Adapter<MovieListAdapter.MyViewHolder> {
     Context context;
+
     ArrayList<String> MovieList;
     ArrayList<String> ImagesList;
     private FirebaseServices fbs;

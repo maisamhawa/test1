@@ -1,12 +1,12 @@
-package com.example.test1;
+package com.example.test1.fragments;
 
 
 import android.app.FragmentTransaction;
-import android.os.Build;
+import android.content.Context;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.RequiresApi;
+
 import android.app.Fragment;
 
 import android.util.Log;
@@ -14,18 +14,17 @@ import android.util.Patterns;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.example.test1.classes.FirebaseServices;
+import com.example.test1.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.SignInMethodQueryResult;
-
-import java.util.List;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -77,6 +76,8 @@ public class signupFragment extends Fragment {
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
     }
+
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -86,7 +87,6 @@ public class signupFragment extends Fragment {
     @Override
     public void onStart() {
         super.onStart();
-        //connecting Components
         fbs = FirebaseServices.getInstance();
         etUsername = getView().findViewById(R.id.etUsernameSignup);
         etPassword = getView().findViewById(R.id.etPasswordSignup);
@@ -94,7 +94,6 @@ public class signupFragment extends Fragment {
         btnSignup.setOnClickListener(new View.OnClickListener() {
          @Override
          public void onClick(View view) {
-             //Data validation
              String username = etUsername.getText().toString();
              String password = etPassword.getText().toString();
 
@@ -111,6 +110,11 @@ public class signupFragment extends Fragment {
                                  if (task.isSuccessful()) {
                                      if(password.length()<6){ Toast.makeText(getActivity(), "Password must be at least 6 characters! Failed to sign up", Toast.LENGTH_LONG).show();}
                                      Toast.makeText(getActivity(), "User created successfully", Toast.LENGTH_SHORT).show();
+                                     InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+                                     View view = getActivity().getCurrentFocus();
+                                     if (view != null) {
+                                         imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+                                     }
                                      gotoAllMovie();
                                  } else {
                                      Toast.makeText(getActivity(), "Error: " + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
@@ -125,14 +129,10 @@ public class signupFragment extends Fragment {
 
                          });
 
-
-
              }
          }
      });
     }
-
-
     private void gotoAllMovie() {
         FragmentTransaction ft = getActivity().getFragmentManager().beginTransaction();
         ft.replace(R.id.Framelayoutmain, new allMovieFragment());

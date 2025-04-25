@@ -1,4 +1,4 @@
-package com.example.test1;
+package com.example.test1.fragments;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -18,6 +18,9 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.Toast;
 
+import com.example.test1.classes.FirebaseServices;
+import com.example.test1.classes.Movie;
+import com.example.test1.R;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 

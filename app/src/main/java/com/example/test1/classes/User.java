@@ -1,4 +1,4 @@
-package com.example.test1;
+package com.example.test1.classes;
 
 public class User {
     private String username;

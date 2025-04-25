@@ -1,11 +1,9 @@
-package com.example.test1;
+package com.example.test1.classes;
 
 import android.os.Parcel;
 import android.os.Parcelable;
 
 import androidx.annotation.NonNull;
-
-import java.io.Serializable;
 
 public class Movie implements Parcelable
 {
@@ -145,5 +143,9 @@ public String getphoto() {
         dest.writeString(description);
         dest.writeString(category);
         dest.writeString(photo);
+    }
+    public Movie(String movieName, String photo) {
+        this.movieName = movieName;
+        this.photo = photo;
     }
 }

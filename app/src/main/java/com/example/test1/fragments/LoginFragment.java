@@ -1,7 +1,8 @@
-package com.example.test1;
+package com.example.test1.fragments;
 
 //import static android.os.Build.VERSION_CODES.R;
 
+import android.content.Context;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -11,16 +12,17 @@ import android.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.test1.classes.FirebaseServices;
+import com.example.test1.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
-
-import java.text.BreakIterator;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -120,6 +122,12 @@ public class LoginFragment extends Fragment {
 
                                     if (task.isSuccessful()) {
                                         Toast.makeText(getActivity(), "Successfully logged in", Toast.LENGTH_LONG).show();
+                                        InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+                                        View view = getActivity().getCurrentFocus();
+                                        if (view != null) {
+                                            imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+                                        }
+
                                         gotoAllMovie();
                                     } else {
                                         String errorMessage = task.getException().getMessage();

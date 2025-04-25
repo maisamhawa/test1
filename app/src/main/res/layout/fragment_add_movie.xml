@@ -98,11 +98,12 @@
 
         <Button
             android:id="@+id/btnAddmovie"
-            android:layout_width="164dp"
-            android:layout_height="0dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_marginBottom="12dp"
-            android:background="#673AB7"
-            android:backgroundTint="#673AB7"
+            android:textColor="#000000"
+            android:textStyle="bold"
+            android:backgroundTint="#CCCCCC"
             android:text="addmovie"
             android:textAppearance="@style/TextAppearance.AppCompat.Large"
             app:layout_constraintBottom_toTopOf="@+id/btnbacktolist"
@@ -112,10 +113,13 @@
 
         <Button
             android:id="@+id/btnbacktolist"
-            android:layout_width="91dp"
-            android:layout_height="0dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_marginBottom="27dp"
             android:text="back"
+            android:textColor="#000000"
+            android:textStyle="bold"
+            android:backgroundTint="#CCCCCC"
             android:textAppearance="@style/TextAppearance.AppCompat.Body1"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
