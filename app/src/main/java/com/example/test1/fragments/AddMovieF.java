@@ -1,12 +1,10 @@
 package com.example.test1.fragments;
-
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
-
 import android.app.Fragment;
 import android.app.FragmentTransaction;
 import android.provider.MediaStore;
@@ -17,42 +15,33 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.Toast;
-
 import com.example.test1.classes.FirebaseServices;
 import com.example.test1.classes.Movie;
 import com.example.test1.R;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
-
 import java.io.FileNotFoundException;
 import java.io.InputStream;
 
 public class AddMovieF extends Fragment {
-
     private static final int RESULT_LOAD_IMAGE = 1;
     private ImageButton image;
     private Uri imageUri;
-
     private EditText etName, etReleaseDate, etMovieLong, etAgeAllowed, etDescription, etCategory;
     private Button btnAdd, btnback;
     private FirebaseServices fbs;
     private FirebaseStorage storage;
     private StorageReference storageReference;
-
-    public AddMovieF() {
-    }
-
+    public AddMovieF() {}
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         return inflater.inflate(R.layout.fragment_add_movie, container, false);
     }
-
     @Override
     public void onStart() {
         super.onStart();
         connectComponents();
     }
-
     private void connectComponents() {
         etName = getActivity().findViewById(R.id.etMName);
         etReleaseDate = getActivity().findViewById(R.id.etMReleaseDate);
@@ -66,7 +55,6 @@ public class AddMovieF extends Fragment {
         btnAdd = getActivity().findViewById(R.id.btnAddmovie);
         btnback = getActivity().findViewById(R.id.btnbacktolist);
         image = getActivity().findViewById(R.id.imagebtn);
-
         btnAdd.setOnClickListener(view -> {
             String MName = etName.getText().toString();
             String MReleaseDate = etReleaseDate.getText().toString();
@@ -74,26 +62,19 @@ public class AddMovieF extends Fragment {
             String MDescription = etDescription.getText().toString();
             String MAgeAllowed = etAgeAllowed.getText().toString();
             String MCategory = etCategory.getText().toString();
-
             if (MDescription.trim().isEmpty() || MLong.trim().isEmpty() || MCategory.trim().isEmpty() ||
                     MAgeAllowed.trim().isEmpty() || MName.trim().isEmpty() || MReleaseDate.trim().isEmpty()) {
                 Toast.makeText(getActivity(), "Something is Empty", Toast.LENGTH_SHORT).show();
                 return;
             }
-
             if (imageUri == null) {
                 Toast.makeText(getActivity(), "Please select an image", Toast.LENGTH_SHORT).show();
                 return;
             }
-
-            // Upload image to Firebase Storage
             StorageReference imageRef = storageReference.child("movie_images/" + System.currentTimeMillis() + ".jpg");
-
             imageRef.putFile(imageUri)
                     .addOnSuccessListener(taskSnapshot -> imageRef.getDownloadUrl().addOnSuccessListener(uri -> {
-                        String imageUrl = uri.toString(); // Get the image URL
-
-                        // Save the movie details in Firestore with the image URL
+                        String imageUrl = uri.toString();
                         Movie movie = new Movie(MName, MReleaseDate, MLong, MAgeAllowed, MDescription, MCategory, imageUrl);
                         fbs.getFire().collection("movies").add(movie)
                                 .addOnSuccessListener(documentReference -> {
@@ -106,16 +87,13 @@ public class AddMovieF extends Fragment {
         });
 
         btnback.setOnClickListener(view -> gotoallMovieFragment());
-
         image.setOnClickListener(v -> getImageFromAlbum());
     }
-
     private void getImageFromAlbum() {
         Intent photoPickerIntent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
         photoPickerIntent.setType("image/*");
         startActivityForResult(photoPickerIntent, RESULT_LOAD_IMAGE);
     }
-
     @Override
     public void onActivityResult(int reqCode, int resultCode, Intent data) {
         super.onActivityResult(reqCode, resultCode, data);
@@ -124,14 +102,12 @@ public class AddMovieF extends Fragment {
             try {
                 InputStream imageStream = getActivity().getContentResolver().openInputStream(imageUri);
                 Bitmap selectedImage = BitmapFactory.decodeStream(imageStream);
-
                 image.post(() -> {
                     int targetWidth = image.getWidth();
                     int targetHeight = image.getHeight();
                     Bitmap scaledBitmap = Bitmap.createScaledBitmap(selectedImage, targetWidth, targetHeight, true);
                     image.setImageBitmap(scaledBitmap);
                 });
-
             } catch (FileNotFoundException e) {
                 e.printStackTrace();
                 Toast.makeText(getActivity(), "Something went wrong", Toast.LENGTH_LONG).show();
@@ -140,7 +116,6 @@ public class AddMovieF extends Fragment {
             Toast.makeText(getActivity(), "You haven't picked an image", Toast.LENGTH_LONG).show();
         }
     }
-
     private void gotoallMovieFragment() {
         FragmentTransaction ft = getActivity().getFragmentManager().beginTransaction();
         ft.replace(R.id.Framelayoutmain, new allMovieFragment());

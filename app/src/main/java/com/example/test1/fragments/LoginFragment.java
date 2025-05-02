@@ -1,6 +1,5 @@
 package com.example.test1.fragments;
 
-//import static android.os.Build.VERSION_CODES.R;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -109,7 +108,6 @@ public class LoginFragment extends Fragment {
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //Data validation
                 String usernamel = etUsernameL.getText().toString();
                 String passwordl = etPasswordL.getText().toString();
                 if (usernamel.trim().isEmpty() || passwordl.trim().isEmpty()) {

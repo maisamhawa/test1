@@ -1,49 +1,35 @@
 package com.example.test1.fragments;
-
-//import static android.os.Build.VERSION_CODES.R;
-
 import android.app.FragmentTransaction;
 import android.os.Bundle;
-
 import androidx.annotation.NonNull;
 import android.app.Fragment;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
-
 import com.example.test1.classes.FirebaseServices;
 import com.example.test1.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
-
 /**
  * A simple {@link Fragment} subclass.
  * Use the {@link forgotPassword#newInstance} factory method to
  * create an instance of this fragment.
  */
 public class forgotPassword extends Fragment {
-
     private EditText etFP;
     private Button btnReset;
     private FirebaseServices fbs;
 
     // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
-
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
-
-    public forgotPassword() {
-        // Required empty public constructor
-    }
-
+    public forgotPassword() {}
     /**
      * Use this factory method to create a new instance of
      * this fragment using the provided parameters.
@@ -61,7 +47,6 @@ public class forgotPassword extends Fragment {
         fragment.setArguments(args);
         return fragment;
     }
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -70,7 +55,6 @@ public class forgotPassword extends Fragment {
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
     }
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -82,7 +66,6 @@ public class forgotPassword extends Fragment {
         super.onStart();
         connect();
     }
-
     public void connect() {
         fbs = FirebaseServices.getInstance();
         etFP = getView().findViewById(R.id.etResetforgotPassword);

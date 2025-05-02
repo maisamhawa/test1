@@ -1,17 +1,10 @@
 package com.example.test1;
-
-//import static android.os.Build.VERSION_CODES.R;
-
 import android.os.Bundle;
-
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
 import android.app.FragmentTransaction;
-
 import com.example.test1.fragments.LoginFragment;
-
 public class MainActivity extends AppCompatActivity {
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

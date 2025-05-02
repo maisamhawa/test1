@@ -1,14 +1,9 @@
 package com.example.test1.fragments;
-
-
 import android.app.FragmentTransaction;
 import android.content.Context;
 import android.os.Bundle;
-
 import androidx.annotation.NonNull;
-
 import android.app.Fragment;
-
 import android.util.Log;
 import android.util.Patterns;
 import android.view.LayoutInflater;
@@ -18,38 +13,29 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
-
 import com.example.test1.classes.FirebaseServices;
 import com.example.test1.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
-
 /**
  * A simple {@link Fragment} subclass.
  * Use the {@link signupFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
 public class signupFragment extends Fragment {
-
     private EditText etUsername , etPassword;
     private Button btnSignup;
     private FirebaseServices fbs;
-
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
-
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
-
-    public signupFragment() {
-        // Required empty public constructor
-    }
-
+    public signupFragment() {}
     /**
      * Use this factory method to create a new instance of
      * this fragment using the provided parameters.
@@ -67,7 +53,6 @@ public class signupFragment extends Fragment {
         fragment.setArguments(args);
         return fragment;
     }
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -76,12 +61,9 @@ public class signupFragment extends Fragment {
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
     }
-
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
+                             Bundle savedInstanceState) {// Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_signup, container, false);
     }
     @Override
@@ -126,9 +108,7 @@ public class signupFragment extends Fragment {
                              public void onFailure(@NonNull Exception e) {
                                  Toast.makeText(getActivity(), "Failure listener triggered: " + e.getMessage(), Toast.LENGTH_SHORT).show();  // Show failure message
                              }
-
                          });
-
              }
          }
      });

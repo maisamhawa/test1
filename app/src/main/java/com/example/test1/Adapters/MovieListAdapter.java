@@ -1,5 +1,4 @@
 package com.example.test1.Adapters;
-
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,17 +13,12 @@ import com.bumptech.glide.Glide;
 import com.example.test1.classes.FirebaseServices;
 import com.example.test1.MovieDetailsActivity;
 import com.example.test1.R;
-
 import java.util.ArrayList;
-
 public class MovieListAdapter extends RecyclerView.Adapter<MovieListAdapter.MyViewHolder> {
     Context context;
-
     ArrayList<String> MovieList;
     ArrayList<String> ImagesList;
     private FirebaseServices fbs;
-
-
     public MovieListAdapter(Context context, ArrayList<String> movieList, ArrayList<String> imagesList) {
         this.context = context;
         this.MovieList = movieList;
@@ -32,7 +26,6 @@ public class MovieListAdapter extends RecyclerView.Adapter<MovieListAdapter.MyVi
         this.fbs = FirebaseServices.getInstance();
 
     }
-
     public static class MyViewHolder extends RecyclerView.ViewHolder{
         TextView movieName;
         ImageView movieImage;
@@ -42,14 +35,12 @@ public class MovieListAdapter extends RecyclerView.Adapter<MovieListAdapter.MyVi
             movieImage = (ImageView) itemView.findViewById(R.id.MoviePoster);
         }
     }
-
     @NonNull
     @Override
     public MovieListAdapter.MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType){
         View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.movielist_item,parent,false);
         return new MovieListAdapter.MyViewHolder(v);
     }
-
     @Override
     public void onBindViewHolder(@NonNull MovieListAdapter.MyViewHolder holder, int position) {
         holder.movieName.setText((String) MovieList.get(position));
@@ -62,17 +53,14 @@ public class MovieListAdapter extends RecyclerView.Adapter<MovieListAdapter.MyVi
         String imageUrl = ImagesList.get(position);
         Glide.with(context).load(imageUrl).into(holder.movieImage);
     }
-
     @Override
     public int getItemCount(){
         return MovieList.size();
     }
-
     private void gotoMovieDetails(String movieName) {
         Intent intent = new Intent(context, MovieDetailsActivity.class);
-        intent.putExtra(MovieDetailsActivity.EXTRA_MOVIE_NAME, movieName); // Pass movie name
-        context.startActivity(intent); // Start new activity
+        intent.putExtra(MovieDetailsActivity.EXTRA_MOVIE_NAME, movieName);
+        context.startActivity(intent);
     }
-
 }
 

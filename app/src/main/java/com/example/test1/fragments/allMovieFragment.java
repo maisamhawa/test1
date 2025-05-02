@@ -1,177 +1,4 @@
-/*package com.example.test1.fragments;
-
-import android.annotation.SuppressLint;
-import android.app.Fragment;
-import android.app.FragmentTransaction;
-import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-
-import androidx.core.content.ContextCompat;
-import androidx.recyclerview.widget.DividerItemDecoration;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
-import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.Toast;
-
-import com.example.test1.classes.FirebaseServices;
-import com.example.test1.classes.Movie;
-import com.example.test1.Adapters.MovieListAdapter;
-import com.example.test1.R;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
-
-import com.google.firebase.firestore.DocumentSnapshot;
-import com.google.firebase.firestore.QuerySnapshot;
-
-import java.util.ArrayList;
-
-
-
- * A simple {@link Fragment} subclass.
- * Use the {@link allMovieFragment#newInstance} factory method to
- * create an instance of this fragment.
-
-public class allMovieFragment extends Fragment {
-    private Button newmovie ,btnFavorites,btnWatchlist;
-    private FirebaseServices fbs;
-    private ArrayList<String> movies;
-    private ArrayList<String> images;
-    private RecyclerView recyclerView;
-    private MovieListAdapter adapter;
-    private RecyclerView.LayoutManager layoutManager;
-
-
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
-
-    public allMovieFragment() {
-        // Required empty public constructor
-    }
-    public static allMovieFragment newInstance(String param1, String param2) {
-        allMovieFragment fragment = new allMovieFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
-    }
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
-    }
-
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-
-        return inflater.inflate(R.layout.fragment_all_movie, container, false);
-
-    }
-
-    @Override
-    public void onStart() {
-        super.onStart();
-
-        newmovie=getView().findViewById(R.id.btnaddNmovie);
-
-        btnFavorites = getView().findViewById(R.id.btnFavorites);
-        btnFavorites.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                gotoFavoriteFragment();
-            }
-        });
-
-        btnWatchlist = getView().findViewById(R.id.btnWatchlist);
-        btnWatchlist.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-               //gotoWatchListFragment();
-            }
-        });
-
-        fbs=FirebaseServices.getInstance();
-        recyclerView = getView().findViewById(R.id.rvMoviesmovieFragment);
-
-        recyclerView.setHasFixedSize(true);
-        movies = new ArrayList<String>();
-        images = new ArrayList<String>();
-        layoutManager = new LinearLayoutManager(getActivity());
-        recyclerView.setLayoutManager(layoutManager);
-
-        adapter = new MovieListAdapter(getActivity(), movies, images);
-        recyclerView.setAdapter(adapter);
-        DividerItemDecoration divider = new DividerItemDecoration(recyclerView.getContext(), DividerItemDecoration.VERTICAL);
-        divider.setDrawable(ContextCompat.getDrawable(getContext(), R.drawable.divider_layout));
-        recyclerView.addItemDecoration(divider);
-        fbs.getFire().collection("movies").get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
-            @SuppressLint("NotifyDataSetChanged")
-            @Override
-            public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
-                for (DocumentSnapshot dataSnapshot : queryDocumentSnapshots.getDocuments()) {
-                    Movie movie = dataSnapshot.toObject(Movie.class);
-                    movies.add(movie.getMovieName());
-                    images.add(movie.getphoto());
-
-                }
-                adapter.notifyDataSetChanged();
-            }
-        }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception e) {
-                Toast.makeText(getActivity(), "No data available", Toast.LENGTH_SHORT).show();
-                Log.e("AllMoviesFragment", e.getMessage());
-            }
-        });
-        newmovie.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                gotoAddMovie();
-            }
-
-
-        });
-    }
-    private void gotoAddMovie() {
-        FragmentTransaction ft = getActivity().getFragmentManager().beginTransaction();
-        ft.replace(R.id.Framelayoutmain, new AddMovieF());
-        ft.commit();
-    }
-    private void gotoFavoriteFragment() {
-        FragmentTransaction ft = getActivity().getFragmentManager().beginTransaction();
-        ft.replace(R.id.fragment_container, new FavoriteFragment());
-        ft.addToBackStack(null);
-        ft.commit();
-    }
-  / private void gotoWatchListFragment(){
-        FragmentTransaction ft = getActivity().getFragmentManager().beginTransaction();;
-       ft.replace(R.id.fragment_container, new WatchListFragment());
-        ft.addToBackStack(null);
-        ft.commit();
-   }
-}
-*/
-
 package com.example.test1.fragments;
-
 import android.annotation.SuppressLint;
 import android.app.Fragment;
 import android.app.FragmentTransaction;
@@ -182,13 +9,11 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.Toast;
 import android.util.Log;
-
 import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
 import com.example.test1.R;
 import com.example.test1.classes.FirebaseServices;
 import com.example.test1.classes.Movie;
@@ -197,11 +22,9 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
-
 import java.util.ArrayList;
 
 public class allMovieFragment extends Fragment {
-
     private Button newmovie, btnFavorites, btnWatchlist;
     private FirebaseServices fbs;
     private ArrayList<String> movies;
@@ -209,36 +32,28 @@ public class allMovieFragment extends Fragment {
     private RecyclerView recyclerView;
     private MovieListAdapter adapter;
     private RecyclerView.LayoutManager layoutManager;
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         return inflater.inflate(R.layout.fragment_all_movie, container, false);
     }
-
     @Override
     public void onStart() {
         super.onStart();
-
         newmovie = getView().findViewById(R.id.btnaddNmovie);
         btnFavorites = getView().findViewById(R.id.btnFavorites);
         btnWatchlist = getView().findViewById(R.id.btnWatchlist);
-
         fbs = FirebaseServices.getInstance();
         movies = new ArrayList<>();
         images = new ArrayList<>();
-
         recyclerView = getView().findViewById(R.id.rvMoviesmovieFragment);
         recyclerView.setHasFixedSize(true);
         layoutManager = new LinearLayoutManager(getActivity());
         recyclerView.setLayoutManager(layoutManager);
         adapter = new MovieListAdapter(getActivity(), movies, images);
         recyclerView.setAdapter(adapter);
-
         DividerItemDecoration divider = new DividerItemDecoration(recyclerView.getContext(), DividerItemDecoration.VERTICAL);
         divider.setDrawable(ContextCompat.getDrawable(getContext(), R.drawable.divider_layout));
         recyclerView.addItemDecoration(divider);
-
-        // Load Movies
         fbs.getFire().collection("movies").get()
                 .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
                     @SuppressLint("NotifyDataSetChanged")
@@ -259,22 +74,18 @@ public class allMovieFragment extends Fragment {
                         Log.e("AllMoviesFragment", e.getMessage());
                     }
                 });
-
-        // Button Listeners
         newmovie.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 gotoAddMovie();
             }
         });
-
         btnFavorites.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 gotoFavoriteFragment();
             }
         });
-
         btnWatchlist.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -282,21 +93,18 @@ public class allMovieFragment extends Fragment {
             }
         });
     }
-
     private void gotoAddMovie() {
         FragmentTransaction ft = getFragmentManager().beginTransaction();
         ft.replace(R.id.Framelayoutmain, new AddMovieF());
         ft.addToBackStack(null);
         ft.commit();
     }
-
     private void gotoFavoriteFragment() {
         FragmentTransaction ft = getFragmentManager().beginTransaction();
         ft.replace(R.id.Framelayoutmain, new FavoriteFragment());
         ft.addToBackStack(null);
         ft.commit();
     }
-
     private void gotoWatchListFragment() {
         FragmentTransaction ft = getFragmentManager().beginTransaction();
         ft.replace(R.id.Framelayoutmain, new WatchListFragment());
